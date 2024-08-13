@@ -1,0 +1,12 @@
+go 1.21.0
+
+use (
+	./amhl
+	./musig2
+	./schnorr
+	./xworld/assetmgr
+	./xworld/assetstore
+	./xworld/ledger/chaincode/aswap
+	./xworld/ledger/chaincode/nft
+	./xworld/mobile_cw
+)
