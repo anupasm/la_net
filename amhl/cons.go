@@ -1,0 +1,36 @@
+package amhl
+
+var I2S = map[int]string{
+	1:  "16Uiu2HAmVkKntsECaYfefR1V2yCR79CegLATuTPE6B9TxgxBiiiA",
+	2:  "16Uiu2HAmPLe7Mzm8TsYUubgCAW1aJoeFScxrLj8ppHFivPo97bUZ",
+	3:  "16Uiu2HAm7JvHh9HhWUy3sVBYzPcVJTmDFbGxQ1dnBWgCRzfN1TXM",
+	4:  "16Uiu2HAmSAnQRySqJdCEWrz5JCygK3CW1eqxUL8aR2gLaaGoGAC5",
+	5:  "16Uiu2HAmJb2e28qLXxT5kZxVUUoJt72EMzNGXB47Rxx5hw3q4YjS",
+	6:  "16Uiu2HAm4v86W3bmT1BiH6oSPzcsSr24iDQpSN5Qa992BCjjwgrD",
+	7:  "16Uiu2HAmL5okWopX7NqZWBUKVqW8iUxCEmd5GMHLVPwCgzYzQv3e",
+	8:  "16Uiu2HAm2uS7Dg28QsrScsA8Ug5ncYor7ezUdUwFq7z2DoNrs3Eo",
+	9:  "16Uiu2HAmDxEwgV8mGnpcrQouDiz7RYRNc1t1wiXtN3ojeYER2XD8",
+	10: "16Uiu2HAkzDUs7kyFK4MsU22vA4BZpuBXza9GR5geMycaPtrVSNdg",
+	11: "16Uiu2HAmR8qsej5qmamWEtZ97uyteosMFRnYrekoHb9JDT5PPXKZ",
+}
+
+var S2I = map[string]int{
+	"16Uiu2HAmVkKntsECaYfefR1V2yCR79CegLATuTPE6B9TxgxBiiiA": 1,
+	"16Uiu2HAmPLe7Mzm8TsYUubgCAW1aJoeFScxrLj8ppHFivPo97bUZ": 2,
+	"16Uiu2HAm7JvHh9HhWUy3sVBYzPcVJTmDFbGxQ1dnBWgCRzfN1TXM": 3,
+	"16Uiu2HAmSAnQRySqJdCEWrz5JCygK3CW1eqxUL8aR2gLaaGoGAC5": 4,
+	"16Uiu2HAmJb2e28qLXxT5kZxVUUoJt72EMzNGXB47Rxx5hw3q4YjS": 5,
+	"16Uiu2HAm4v86W3bmT1BiH6oSPzcsSr24iDQpSN5Qa992BCjjwgrD": 6,
+	"16Uiu2HAmL5okWopX7NqZWBUKVqW8iUxCEmd5GMHLVPwCgzYzQv3e": 7,
+	"16Uiu2HAm2uS7Dg28QsrScsA8Ug5ncYor7ezUdUwFq7z2DoNrs3Eo": 8,
+	"16Uiu2HAmDxEwgV8mGnpcrQouDiz7RYRNc1t1wiXtN3ojeYER2XD8": 9,
+	"16Uiu2HAkzDUs7kyFK4MsU22vA4BZpuBXza9GR5geMycaPtrVSNdg": 10,
+	"16Uiu2HAmR8qsej5qmamWEtZ97uyteosMFRnYrekoHb9JDT5PPXKZ": 11,
+}
+
+var MAX_TX_PER_COLLATE = 0 // tbd--
+var TX_SIMULATE = 30000
+var NETWORK_LATENCY = 100 //ms
+var MS_PER_TX = 10        //100tps
+var COLLATE_FREQ = 6      //seconds
+var RELEASE_FREQ = 1
