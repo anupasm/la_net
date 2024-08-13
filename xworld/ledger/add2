@@ -1,0 +1,1 @@
+x509::CN=org2admin,OU=admin,O=Hyperledger,ST=North Carolina,C=US::CN=ca.org2.example.com,O=org2.example.com,L=Hursley,ST=Hampshire,C=UK
