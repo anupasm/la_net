@@ -121,7 +121,7 @@ func payHandler(message []byte) {
 	go node.SelfInit(qr.SID, secret, amount, merchant)
 
 	tx := <-txSuccess
-	log.Println("success")
+	println("||||payment ends at", time.Now().String())
 	err = conn.WriteMessage(websocket.TextMessage, []byte("Transaction Successful: "+tx.ID()))
 	if err != nil {
 		return

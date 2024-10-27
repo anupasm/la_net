@@ -70,9 +70,6 @@ func init_ledger() {
 	network = gateway.GetNetwork(channelName)
 	nftcontract = network.GetContract(nftchaincodeName)
 	swapcontract = network.GetContract(swapchaincodeName)
-	result, _ := nftcontract.EvaluateTransaction("ClientAccountID")
-
-	println(string(result))
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -95,13 +92,14 @@ func init_ledger() {
 			secret := tx.GetR()
 			secretstr := hex.EncodeToString(secret.ToBytes())
 
-			println("||||lock begins at", time.Now().String())
+			println("||||approve begins at", time.Now().String())
 
 			//approve the transfer to swap chaincode
 			_, err = nftcontract.SubmitTransaction("Approve", swapchaincodeName, txId)
 			if err != nil {
 				panic(err)
 			}
+			println("||||lock begins at", time.Now().String())
 
 			//call the swap protocol to lock the asset
 			_, err = swapcontract.SubmitTransaction("Lock", consumerId, secretstr, tx.ID(), nftchaincodeName, "1000")
@@ -114,7 +112,7 @@ func init_ledger() {
 			notifiers[NOTIFY_LOCKED] <- "Asset Locked. You can claim it."
 		case <-txSuccess:
 			notifiers[NOTIFY_PAID] <- "Payment Received."
-			println("||||tx success at", time.Now().String())
+			println("||||merchant payment received at", time.Now().String())
 
 		}
 	}

@@ -1,0 +1,8 @@
+Model Information:
+* title:	Milks and some juices
+* source:	https://sketchfab.com/3d-models/milks-and-some-juices-b70fc765ce96483ca8d6563095255f2c
+* author:	stylo0 (https://sketchfab.com/stylo0)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works

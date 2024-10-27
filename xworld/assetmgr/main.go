@@ -7,12 +7,10 @@ SPDX-License-Identifier: Apache-2.0
 package main
 
 import (
-	"bytes"
 	"context"
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"html/template"
 	"log"
@@ -34,17 +32,12 @@ const (
 	ASSET_MGR_HOST_PORT = "9050"
 )
 
-var now = time.Now()
-var assetID = fmt.Sprintf("asset%d", now.Unix()*1e3+int64(now.Nanosecond())/1e6)
 var clientConnection *grpc.ClientConn
 var network *client.Network
 var gateway *client.Gateway
-var nftcontract *client.Contract
 var swapcontract *client.Contract
-var cancel context.CancelFunc
 
 var key [32]byte
-var done chan bool
 var keystr string
 
 func main() {
@@ -61,12 +54,6 @@ func payHandler(w http.ResponseWriter, r *http.Request) {
 	merchant := r.URL.Query().Get("merchant")
 	amount := r.URL.Query().Get("amount")
 	sid := r.URL.Query().Get("sid")
-
-	// pathids := amhl.GetPath(customer, merchant)
-	// var path []string
-	// for _, p := range pathids {
-	// 	path = append(path, p.String())
-	// }
 
 	k, K := schnorr.NewRandomPoint()
 	key = k.Bytes()
@@ -114,11 +101,7 @@ func connect() {
 	}
 
 	network = gateway.GetNetwork(channelName)
-	nftcontract = network.GetContract(nftchaincodeName)
 	swapcontract = network.GetContract(swapchaincodeName)
-	result, _ := nftcontract.EvaluateTransaction("ClientAccountID")
-
-	println(string(result))
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -126,15 +109,8 @@ func connect() {
 	defer gateway.Close()
 
 	// Replay events from the block containing the first transaction
-	go replayChaincodeEvents(ctx, network)
-	<-done
-}
+	replayChaincodeEvents(ctx, network)
 
-func claim(agreementID string) {
-
-	fmt.Printf("\n--> Submit transaction: Claim, %s to Mary\n", assetID)
-
-	fmt.Println("\n*** Claim committed successfully")
 }
 
 func replayChaincodeEvents(ctx context.Context, network *client.Network) {
@@ -146,31 +122,19 @@ func replayChaincodeEvents(ctx context.Context, network *client.Network) {
 
 	for {
 		select {
-		case <-time.After(10 * time.Minute):
-			panic(errors.New("timeout waiting for event replay"))
-
 		case event := <-events:
 			if event == nil {
-				return
+				continue
 			}
-
 			if event.EventName == "Agreement" {
 				agreementID := hex.EncodeToString(event.Payload)
 				_, err := swapcontract.SubmitTransaction("Claim", agreementID, keystr)
-				println("||||asset received at", time.Now().String())
 				if err != nil {
 					panic(fmt.Errorf("failed to submit transaction: %w", err))
 				}
-				return
+				println("||||asset received at", time.Now().String())
+				continue
 			}
 		}
 	}
-}
-
-func formatJSON(data []byte) string {
-	var result bytes.Buffer
-	if err := json.Indent(&result, data, "", "  "); err != nil {
-		panic(fmt.Errorf("failed to parse JSON: %w", err))
-	}
-	return result.String()
 }

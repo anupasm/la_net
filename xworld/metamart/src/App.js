@@ -1,12 +1,13 @@
 import './index.css';
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls, useGLTF } from '@react-three/drei'
+import { Image, OrbitControls, useGLTF } from '@react-three/drei'
 import Item from './Item';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import 'react-toastify/dist/ReactToastify.min.css';
+
 
 const ASSET_MGR_ENDPOINT = "//127.0.0.1:9050/pay"
 const ASSET_STORE_ENDPOINT_ASSET = "//127.0.0.1:7049/asset"
@@ -15,7 +16,6 @@ function App() {
   const [iframeContent, setIframeContent] = useState('');
   const [showIframe, setShowIframe] = useState(false);
   const [asset, setAsset] = useState('');
-
   useEffect(() => {
 
     axios
@@ -32,8 +32,8 @@ function App() {
 
     socket.onmessage = (event) => {
       toast.success(event.data);
+      setShowIframe(false);
       if(event.data === "Payment Received."){
-        setShowIframe(false);
         axios
         .get(ASSET_STORE_ENDPOINT_ASSET)
         .then((res) => {
@@ -69,11 +69,12 @@ function App() {
 
   return (
     <div className="App">
+      
       <ToastContainer
-        autoClose={500}
+        autoClose={1000}
       />
-
-      <div className="wrapper">
+      <div className="wrapper" style={{backgroundImage: `url(${process.env.PUBLIC_URL + '/back.jpeg'})`}}>
+      <div className="heading"><h1>MetaMart</h1></div>
         <div className="card">
           <div className="product-canvas">
             <Canvas>
@@ -91,16 +92,17 @@ function App() {
               </Suspense>
             </Canvas>
           </div>
-          <div>{asset}</div>
+          <div>Product ID: {asset}</div>
           <div className='button'>
-            <div>
+              <Button>Trace</Button>
+              <div></div>
               <Button onClick={handleButtonClick}>Buy</Button>
-            </div>
           </div>
           {showIframe && (
             <div className="popup">
               <div className="popup_overlay" onClick={() => setShowIframe(false)}></div>
               <div className="popup_content">
+                <div>Scan here for Wallex payment:</div>
                 <iframe srcDoc={iframeContent} className="iframe" title="API Content" />
               </div>
             </div>

@@ -61,10 +61,13 @@ func main() {
 		for {
 			select {
 			case n := <-notifiers[NOTIFY_LOCKED]:
+				println("OOO1")
 				conn.WriteMessage(websocket.TextMessage, []byte(n))
 			case n := <-notifiers[NOTIFY_CLAIMED]:
+				println("OOO2")
 				conn.WriteMessage(websocket.TextMessage, []byte(n))
 			case n := <-notifiers[NOTIFY_PAID]:
+				println("OOO3")
 				conn.WriteMessage(websocket.TextMessage, []byte(n))
 			default:
 				continue

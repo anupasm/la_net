@@ -6,12 +6,21 @@
 
 .wrapper {
   min-height: 100vh;
+  flex-direction: column;
   display: flex;
   align-items: center;
   justify-content: space-around;
   background-color: #5dafb8;
   color:white;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.heading {
+  width: 30vw;
+  display: 'flex';
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
 }
 
 .card {
@@ -37,12 +46,14 @@
 .button {
   display: flex;
   justify-content: flex-end;
+  margin: 20px;
 }
 
 .button div {padding:8px;}
 
 
 .popup {
+  width: 30vw;
   top: 0;
   left: 0;
   display: 'flex';
@@ -62,7 +73,7 @@
 
 .popup_content{
   position: 'relative';
-  background-color: '#fff';
+  background-color: black;
   border-radius: '8px';
   overflow: 'hidden';
   z-index: 1001;
